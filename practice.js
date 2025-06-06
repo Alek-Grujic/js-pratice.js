@@ -36,23 +36,31 @@ function User(userName, password) {
     this.name = userName;
     let _password = password;
 
-    Object.defineProperty(this, 'pasSetup', {
+    Object.defineProperty(this, 'password', {
         get: function () {
-            return password = "*****";
+            return "********";
         },
         set: function (value) {
-            if (value < 6) throw new Error('To short...')
+            if (value.length < 6) { throw new Error('To short...') }
             _password = value;
         }
     });
 
-    this.login = function () {
-
+    this.login = function (passCheck) {
+        if (passCheck === _password) return 'Access granted';
+        return 'Access denied';
     }
 
 }
 
 
 const user1 = new User('Mark', 'tajna123');
+user1.password = 'nova123';
 
 console.log(user1.password);
+
+console.log(user1.login('nova123'));
+
+
+
+
