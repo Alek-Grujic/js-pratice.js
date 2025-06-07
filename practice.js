@@ -85,14 +85,28 @@ function User(userName, password) {
     });
 
     this.login = function (passCheck) {
-        if (passCheck === _password) return 'Access granted';
+
+        let _locked = true;
+
         if (_attempts <= 3) {
-            if (_attempts < 2) {
-                _attempts++;
-                return `Access denied ${_attempts}. time`
-            }
-            return 'Account locked';
+            _attempts++;
+            console.log(_attempts);
+            if (_attempts >= 3) return 'Account locked';
         }
+
+        // if (passCheck === _password) {
+        //     _attempts = 0;
+        //     console.log(_attempts);
+        //     return 'Access granted'
+        // }
+
+        // if (_attempts <= 3) {
+        //     if (_attempts < 2) {
+        //         _attempts++;
+        //         return `Access denied ${_attempts}. time`
+        //     }
+        //     return 'Account locked';
+        // }
     }
 
 }
@@ -105,4 +119,5 @@ console.log(user1.password);
 
 console.log(user1.login('tajna123'));
 console.log(user1.login('tajna123'));
-console.log(user1.login('tajna123'));
+console.log(user1.login('nova1f23'));
+console.log(user1.login('nova1f23'));
