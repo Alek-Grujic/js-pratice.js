@@ -73,6 +73,7 @@ function User(userName, password) {
     this.name = userName;
     let _password = password;
     let _attempts = 0;
+    let _locked = false;
 
     Object.defineProperty(this, 'password', {
         get: function () {
@@ -86,27 +87,24 @@ function User(userName, password) {
 
     this.login = function (passCheck) {
 
-        let _locked = true;
-
-        if (_attempts <= 3) {
-            _attempts++;
-            console.log(_attempts);
-            if (_attempts >= 3) return 'Account locked';
+        if (_locked) {
+            return 'Account locked';
         }
 
-        // if (passCheck === _password) {
-        //     _attempts = 0;
-        //     console.log(_attempts);
-        //     return 'Access granted'
-        // }
+        if (passCheck === _password) {
+            _attempts = 0;
+            return 'Access granted'
+        }
 
-        // if (_attempts <= 3) {
-        //     if (_attempts < 2) {
-        //         _attempts++;
-        //         return `Access denied ${_attempts}. time`
-        //     }
-        //     return 'Account locked';
-        // }
+        if (_attempts < 3) {
+            _attempts++;
+            if (_attempts === 3) {
+                _locked = true;
+                return `Access denied ${_attempts}. time - Account locked.`;
+            }
+            return `Access denied ${_attempts}. time.`;
+        }
+
     }
 
 }
@@ -119,5 +117,9 @@ console.log(user1.password);
 
 console.log(user1.login('tajna123'));
 console.log(user1.login('tajna123'));
-console.log(user1.login('nova1f23'));
-console.log(user1.login('nova1f23'));
+console.log(user1.login('nova123'));
+console.log(user1.login('nova1234'));
+console.log(user1.login('nova1234'));
+console.log(user1.login('nova1234'));
+console.log(user1.login('nova123'));
+console.log(user1.login('nova123'));
