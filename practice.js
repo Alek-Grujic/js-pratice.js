@@ -129,50 +129,78 @@
 
 // setInterval, setTimeout and clearInterval
 
-let ids = setInterval(() => {
-    console.log('Radi...');
-}, 1000);
+// let ids = setInterval(() => {
+//     console.log('Radi...');
+// }, 1000);
 
-setTimeout(() => {
-    clearInterval(ids);
-    console.log('Zaustavljeno!');
-}, 5000);
+// setTimeout(() => {
+//     clearInterval(ids);
+//     console.log('Zaustavljeno!');
+// }, 5000);
 
-// ----------------------------------
+// // ----------------------------------
+// // first way
 
-let count = 1;
+// let count = 1;
 
-let id = setInterval(() => {
-    console.log(count);
-    count++;
-    if (count > 5) clearInterval(id);
-}, 1000);
+// let id = setInterval(() => {
+//     console.log(count);
+//     count++;
+//     if (count > 5) clearInterval(id);
+// }, 1000);
 
-// ----------------------------------
+// // ----------------------------------
+// // second way
 
-let count2 = 1;
+// let count2 = 1;
 
-let id2 = setInterval(() => {
-    console.log(count);
-    count++;
-    if (count > 5) clearInterval(id2);
-}, 1000);
+// let id2 = setInterval(() => {
+//     console.log(count);
+//     count++;
+//     if (count > 5) clearInterval(id2);
+// }, 1000);
 
-setTimeout(() => {
-    clearInterval(id2);
-    console.log('Zaustavljeno');
-}, 5000);
-
-
-
-
-// function CountdownTimer(seconds) {
-//     this.start =
-// }
+// setTimeout(() => {
+//     clearInterval(id2);
+//     console.log('Zaustavljeno');
+// }, 5000);
 
 
+function CountdownTimer(seconds) {
 
-// const timer = new CountdownTimer(10);
+    let _paused = false;
+
+    this.start = function () {
+
+
+        let timer = setInterval(() => {
+            let rest = 0;
+            console.log(`Time left: ${seconds}`);
+            seconds--;
+            rest = + seconds;
+            if (_paused) {
+                console.log(rest);
+                clearInterval(timer);
+            }
+            if (seconds === 0) {
+                console.log(`Time's up!`);
+                clearInterval(timer);
+            }
+        }, 1000)
+    };
+    this.pause = function () {
+        _paused = true;
+    }
+};
+this.restart = function () {
+
+};
 
 
 
+
+const timer = new CountdownTimer(5);
+
+timer.start();
+
+timer.pause();
