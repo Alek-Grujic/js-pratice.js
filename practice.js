@@ -201,6 +201,12 @@ function CountdownTimer(seconds) {
     };
 
     this.restart = function () {
+        if (!_running) console.log(`Timer isn't running. Nothing to restart.`);
+        if (_running) {
+            clearInterval(_timer);
+            _currentSeconds = _time;
+            _running = false;
+        }
 
     };
 
