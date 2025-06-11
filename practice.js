@@ -168,39 +168,45 @@
 
 function CountdownTimer(seconds) {
 
-    let _paused = false;
+    let _timer;
+    let _time = seconds;
+    let _currentSeconds = seconds;
+    let _running = false;
 
     this.start = function () {
+        if (_running) {
+            // throw new Error('Timer si working!');
+            return 'Timer is working!';
 
-
-        let timer = setInterval(() => {
-            let rest = 0;
-            console.log(`Time left: ${seconds}`);
-            seconds--;
-            rest = + seconds;
-            if (_paused) {
-                console.log(rest);
-                clearInterval(timer);
-            }
-            if (seconds === 0) {
+        }
+        _running = true;
+        _timer = setInterval(() => {
+            console.log(`Time left: ${_currentSeconds}`);
+            _currentSeconds--;
+            if (_currentSeconds === 0) {
                 console.log(`Time's up!`);
-                clearInterval(timer);
+                clearInterval(_timer);
+                _currentSeconds = _time;
+                _running = false;
             }
         }, 1000)
     };
+
     this.pause = function () {
-        _paused = true;
-    }
-};
-this.restart = function () {
+        if (_running) {
+            console.log(`Seconds left: ${_currentSeconds}`);
+            clearInterval(_timer);
+        }
+        if (!_started)
+            console.log(`Timer isn't started yet.`);
+    };
+
+    this.restart = function () {
+
+    };
 
 };
-
-
-
-
-const timer = new CountdownTimer(5);
+const timer = new CountdownTimer(10);
 
 timer.start();
 
-timer.pause();
