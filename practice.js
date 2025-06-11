@@ -180,13 +180,16 @@ function CountdownTimer(seconds) {
 
         }
         _running = true;
+        if (_currentSeconds === 0) {
+            _currentSeconds = _time;
+        }
         _timer = setInterval(() => {
             console.log(`Time left: ${_currentSeconds}`);
             _currentSeconds--;
             if (_currentSeconds === 0) {
                 console.log(`Time's up!`);
                 clearInterval(_timer);
-                _currentSeconds = _time;
+                _currentSeconds = 0;
                 _running = false;
             }
         }, 1000)
@@ -209,6 +212,12 @@ function CountdownTimer(seconds) {
         }
 
     };
+    this.status = function () {
+        if (_currentSeconds === 0 && !_running) console.log('Finished');
+        if (_currentSeconds === _time && !_running) console.log('Ready');
+        if (_running && _currentSeconds < _time) console.log('Running');
+        if ((!_running && _currentSeconds < _time) && !(_currentSeconds === 0)) console.log('Paused');
+    }
 
 };
 const timer = new CountdownTimer(10);
