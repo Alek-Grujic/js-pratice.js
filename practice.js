@@ -191,14 +191,13 @@ function CountdownTimer(seconds) {
             }
         }, 1000)
     };
-
     this.pause = function () {
+        if (!_running) console.log(`Timer isn't started yet.`);
         if (_running) {
             console.log(`Seconds left: ${_currentSeconds}`);
             clearInterval(_timer);
+            _running = false;
         }
-        if (!_started)
-            console.log(`Timer isn't started yet.`);
     };
 
     this.restart = function () {
