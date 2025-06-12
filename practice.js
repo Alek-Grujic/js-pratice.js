@@ -125,7 +125,7 @@
 // console.log(user1.login('nova123'));
 
 
-// 3. tast - 
+// 3. tast - timer
 
 // setInterval, setTimeout and clearInterval
 
@@ -166,61 +166,119 @@
 // }, 5000);
 
 
-function CountdownTimer(seconds) {
+// function CountdownTimer(seconds) {
 
+//     let _timer;
+//     let _time = seconds;
+//     let _currentSeconds = seconds;
+//     let _running = false;
+
+//     this.start = function () {
+//         if (_running) {
+//             // throw new Error('Timer si working!');
+//             return 'Timer is working!';
+
+//         }
+//         _running = true;
+//         if (_currentSeconds === 0) {
+//             _currentSeconds = _time;
+//         }
+//         _timer = setInterval(() => {
+//             console.log(`Time left: ${_currentSeconds}`);
+//             _currentSeconds--;
+//             if (_currentSeconds === 0) {
+//                 console.log(`Time's up!`);
+//                 clearInterval(_timer);
+//                 _currentSeconds = 0;
+//                 _running = false;
+//             }
+//         }, 1000)
+//     };
+//     this.pause = function () {
+//         if (!_running) console.log(`Timer isn't started yet.`);
+//         if (_running) {
+//             console.log(`Seconds left: ${_currentSeconds}`);
+//             clearInterval(_timer);
+//             _running = false;
+//         }
+//     };
+
+//     this.restart = function () {
+//         if (!_running) console.log(`Timer isn't running. Nothing to restart.`);
+//         if (_running) {
+//             clearInterval(_timer);
+//             _currentSeconds = _time;
+//             _running = false;
+//         }
+
+//     };
+//     this.status = function () {
+//         if (_currentSeconds === 0 && !_running) console.log('Finished');
+//         if (_currentSeconds === _time && !_running) console.log('Ready');
+//         if (_running && _currentSeconds < _time) console.log('Running');
+//         if ((!_running && _currentSeconds < _time) && !(_currentSeconds === 0)) console.log('Paused');
+//     }
+
+// };
+// const timer = new CountdownTimer(10);
+
+// timer.start();
+
+
+// -----------------------------------------------------------
+
+
+// 4. task - Stopwatch
+
+function Stopwatch() {
+
+    this.duration = 0;
     let _timer;
-    let _time = seconds;
-    let _currentSeconds = seconds;
+    let _currentSeconds = this.duration;
     let _running = false;
 
-    this.start = function () {
-        if (_running) {
-            // throw new Error('Timer si working!');
-            return 'Timer is working!';
 
+    this.start = function () {
+        if (_currentSeconds > 0 && _running) {
+            throw new Error('Stopwatch has already started!');
         }
         _running = true;
-        if (_currentSeconds === 0) {
-            _currentSeconds = _time;
-        }
         _timer = setInterval(() => {
-            console.log(`Time left: ${_currentSeconds}`);
-            _currentSeconds--;
-            if (_currentSeconds === 0) {
-                console.log(`Time's up!`);
-                clearInterval(_timer);
-                _currentSeconds = 0;
-                _running = false;
-            }
-        }, 1000)
+            console.log(`Time: ${_currentSeconds + 1}`);
+            _currentSeconds++;
+            this.duration = _currentSeconds;
+        }, 1000);
     };
-    this.pause = function () {
-        if (!_running) console.log(`Timer isn't started yet.`);
+
+    this.stop = function () {
+        if (!_running) throw new Error('Stopwatch is not started!')
         if (_running) {
-            console.log(`Seconds left: ${_currentSeconds}`);
-            clearInterval(_timer);
+            console.log('Stopwatch is stopped!');
             _running = false;
+            clearInterval(_timer);
         }
     };
 
-    this.restart = function () {
-        if (!_running) console.log(`Timer isn't running. Nothing to restart.`);
+    this.reset = function () {
+        if (!_running && _currentSeconds > 0) {
+            console.log(`Stopwatch reseted! Final time: ${_currentSeconds}`);
+            this.duration = 0;
+            _currentSeconds = this.duration;
+            _running = false;
+
+        }
         if (_running) {
             clearInterval(_timer);
-            _currentSeconds = _time;
+            console.log(`Stopwatch reseted! Final time: ${_currentSeconds}`);
+            this.duration = 0;
+            _currentSeconds = this.duration;
             _running = false;
+            // console.log('Stopwatch reseted!');
         }
-
-    };
-    this.status = function () {
-        if (_currentSeconds === 0 && !_running) console.log('Finished');
-        if (_currentSeconds === _time && !_running) console.log('Ready');
-        if (_running && _currentSeconds < _time) console.log('Running');
-        if ((!_running && _currentSeconds < _time) && !(_currentSeconds === 0)) console.log('Paused');
     }
 
-};
-const timer = new CountdownTimer(10);
+}
 
-timer.start();
+const sw = new Stopwatch();
 
+sw.start();
