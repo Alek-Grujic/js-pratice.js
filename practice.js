@@ -232,21 +232,19 @@
 
 function Stopwatch() {
 
-    this.duration = 0;
+    let _duration = 0;
     let _timer;
-    let _currentSeconds = this.duration;
+    let _currentSeconds = _duration;
     let _running = false;
 
 
     this.start = function () {
-        if (_currentSeconds > 0 && _running) {
-            throw new Error('Stopwatch has already started!');
-        }
+        if (_running) throw new Error('Stopwatch has already started!');
         _running = true;
         _timer = setInterval(() => {
-            console.log(`Time: ${_currentSeconds + 1}`);
             _currentSeconds++;
-            this.duration = _currentSeconds;
+            _duration = _currentSeconds;
+            console.log(`Time: ${_currentSeconds}`);
         }, 1000);
     };
 
@@ -260,23 +258,20 @@ function Stopwatch() {
     };
 
     this.reset = function () {
-        if (!_running && _currentSeconds > 0) {
-            console.log(`Stopwatch reseted! Final time: ${_currentSeconds}`);
-            this.duration = 0;
-            _currentSeconds = this.duration;
+        if (_currentSeconds > 0) {
+            if (_running) clearInterval(_timer);
+            console.log(`Stopwatch reset! Final time: ${_currentSeconds}`);
+            _currentSeconds = 0;
+            _duration = 0;
             _running = false;
-
         }
-        if (_running) {
-            clearInterval(_timer);
-            console.log(`Stopwatch reseted! Final time: ${_currentSeconds}`);
-            this.duration = 0;
-            _currentSeconds = this.duration;
-            _running = false;
-            // console.log('Stopwatch reseted!');
-        }
-    }
+    };
 
+    Object.defineProperty(this, 'duration', {
+        get: function () {
+            return _duration;
+        }
+    })
 }
 
 const sw = new Stopwatch();
